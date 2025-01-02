@@ -9,7 +9,53 @@ import { API_BASE_URL } from '../config';
 const formatDate = (date) => (date ? format(new Date(date), 'dd MMM yyyy') : 'No data available');
 
 const Dashboard = () => {
-  const [companies, setCompanies] = useState([]);
+  const [companies, setCompanies] = useState([
+    {
+      id: 1,
+      name: 'Apple Inc.',
+      lastFiveCommunications: [
+        { type: 'Email', date: '2025-01-01', notes: 'Initial communication regarding new product launch.' },
+        { type: 'Phone Call', date: '2024-01-01', notes: 'Follow-up on marketing partnership discussion.' },
+      ],
+      nextScheduledCommunication: { type: 'Email', date: '2025-01-01', notes: 'Reminder email for product updates.' },
+    },
+    {
+      id: 2,
+      name: 'Google (Alphabet Inc.)',
+      lastFiveCommunications: [
+        { type: 'LinkedIn Post', date: '2025-01-03', notes: 'Posted an update about new AI tools.' },
+        { type: 'Email', date: '2024-01-07', notes: 'Follow-up on API integration discussion.' },
+      ],
+      nextScheduledCommunication: { type: 'Phone Call', date: '2025-01-03', notes: 'Scheduled call to finalize partnership details.' },
+    },
+    {
+      id: 3,
+      name: 'Microsoft Corporation',
+      lastFiveCommunications: [
+        { type: 'Phone Call', date: '2025-01-07', notes: 'Discussed product feedback and future collaboration.' },
+        { type: 'LinkedIn Message', date: '2024-01-10', notes: 'Connection request with senior management.' },
+      ],
+      nextScheduledCommunication: { type: 'LinkedIn Message', date: '2025-01-07', notes: 'Message to discuss potential business opportunities.' },
+    },
+    {
+      id: 4,
+      name: 'Amazon.com, Inc.',
+      lastFiveCommunications: [
+        { type: 'LinkedIn Post', date: '2025-01-08', notes: 'Announced new retail strategies for 2025.' },
+        { type: 'Email', date: '2024-01-12', notes: 'Follow-up on supply chain optimization initiative.' },
+      ],
+      nextScheduledCommunication: { type: 'Phone Call', date: '2025-01-08', notes: 'Scheduled follow-up call for strategic alliance discussion.' },
+    },
+    {
+      id: 5,
+      name: 'Tesla, Inc.',
+      lastFiveCommunications: [
+        { type: 'Email', date: '2025-01-14', notes: 'Update on electric vehicle technology improvements.' },
+        { type: 'Phone Call', date: '2024-01-14', notes: 'Discussion on potential market expansion.' },
+      ],
+      nextScheduledCommunication: { type: 'Email', date: '2025-01-14', notes: 'Email regarding product launch event details.' },
+    },
+  ]);
   const [overrides, setOverrides] = useState({}); 
 
   useEffect(() => {
@@ -22,14 +68,12 @@ const Dashboard = () => {
       .catch((error) => console.error(error)); 
   }, []);
 
- 
   const handleOverrideToggle = (id) => {
     setOverrides((prevOverrides) => ({
       ...prevOverrides,
       [id]: !prevOverrides[id], 
     }));
   };
-
 
   const columns = [
     { field: 'name', headerName: 'Company Name', width: 200 },
@@ -57,7 +101,6 @@ const Dashboard = () => {
         const { id, value } = params.row || {}; 
         const isOverride = overrides[id]; 
         const date = value?.date ? new Date(value.date) : null; 
-
 
         const getHighlightClass = () => {
           if (isOverride) return ''; 

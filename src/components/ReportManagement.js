@@ -21,7 +21,7 @@ const ReportManagement = () => {
         {reports.map(report => (
           <ListItem key={report.id} style={{ borderBottom: '1px solid #ccc' }}>
             <ListItemText
-              primary={`${report.company.name} - ${report.report_date}`}
+              primary={`${report.report_date}`}
               secondary={report.summary}
             />
           </ListItem>

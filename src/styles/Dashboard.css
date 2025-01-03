@@ -1,0 +1,78 @@
+body {
+  margin: 0;
+  background: #000;
+  overflow: hidden;
+}
+
+.stars {
+  width: 100%;
+  height: 100%;
+  background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123941/starfield.png') repeat;
+  animation: twinkling 20s linear infinite;
+}
+
+@keyframes twinkling {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -10000px 5000px;
+  }
+}
+
+  /* Dashboard Container */
+.dashboard-container {
+    background: rgba(10, 243, 243, 0.151);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    padding: 20px;
+    margin: auto;
+    max-width: 80%;
+    z-index: 10;
+    animation: fadeInUp 1s ease-out;
+  }
+  
+  /* Title */
+h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: #76c7c0;
+  }
+  
+  /* Data Grid */
+.dashboard-grid {
+    background-color: rgba(9, 5, 5, 0);
+    border: none;
+    border-radius: 10px;
+    color: #090505;
+  }
+  
+.MuiDataGrid-columnHeaders {
+    color: #130e0e;
+  }
+  
+.MuiDataGrid-cell {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+.MuiDataGrid-cell:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+  }
+  
+  /* Highlight Classes */
+.redHighlight {
+    color: #ff5252;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+  }
+  
+.yellowHighlight {
+    color: #ffeb3b;
+    font-weight: bold;
+    animation: pulse 1.5s infinite;
+  }
+  

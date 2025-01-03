@@ -1,58 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { Badge, List, ListItem, ListItemText, Button, Typography, Divider } from '@mui/material';
 import axios from 'axios';
-import CommunicationModal from './CommunicationModal';
+import NotificationModal from './NotificationModal'; // New Modal for Notifications
 import { API_BASE_URL } from '../config';
 
 const Notifications = () => {
   const [overdueCommunications, setOverdueCommunications] = useState([]);
   const [dueTodayCommunications, setDueTodayCommunications] = useState([]);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isNotificationModalOpen, setNotificationModalOpen] = useState(false);
   const [selectedNotification, setSelectedNotification] = useState(null);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`${API_BASE_URL}/admin-module/communications/overdue/`)
-      .then(response => {
+    axios
+      .get(`${API_BASE_URL}/admin-module/communications/overdue/`)
+      .then((response) => {
         setOverdueCommunications(response.data);
         setLoading(false);
       })
-      .catch(error => console.error(error));
-    
-    axios.get(`${API_BASE_URL}/admin-module/communications/due-today/`)
-      .then(response => {
+      .catch((error) => console.error(error));
+
+    axios
+      .get(`${API_BASE_URL}/admin-module/communications/due-today/`)
+      .then((response) => {
         setDueTodayCommunications(response.data);
         setLoading(false);
       })
-      .catch(error => console.error(error));
+      .catch((error) => console.error(error));
   }, []);
-  
 
-  const handleOpenModal = (notification) => {
+  const handleOpenNotificationModal = (notification) => {
     if (notification && notification.company) {
       setSelectedNotification(notification);
-      setModalOpen(true);
+      setNotificationModalOpen(true);
     }
   };
-  
-  const handleCloseModal = () => {
-    setModalOpen(false);
+
+  const handleCloseNotificationModal = () => {
+    setNotificationModalOpen(false);
     setSelectedNotification(null);
   };
 
-  const handleCommunicationSubmit = (data) => {
-    axios.post(`${API_BASE_URL}/admin-module/communications/`, {
-      ...data,
-      company: selectedNotification.company.id,
-    })
-    .then(response => {
-      console.log('Communication logged successfully:', response.data);
-      setModalOpen(false);
-    })
-    .catch(error => console.error(error));
+  const handleNotificationSubmit = (data) => {
+    axios
+      .post(`${API_BASE_URL}/admin-module/communications/`, {
+        ...data,
+        company: selectedNotification.company.id,
+      })
+      .then((response) => {
+        console.log('Notification logged successfully:', response.data);
+        setNotificationModalOpen(false);
+      })
+      .catch((error) => console.error(error));
   };
-  
+
   return (
     <div>
       <Typography variant="h4" gutterBottom>
@@ -71,7 +73,11 @@ const Notifications = () => {
         {overdueCommunications.map((comm) => (
           <ListItem key={comm.id} style={{ borderBottom: '1px solid #ccc' }}>
             <ListItemText primary={`${comm.company.name} - ${new Date(comm.date).toLocaleDateString()}`} />
-            <Button variant="contained" color="primary" onClick={() => handleOpenModal(comm)}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleOpenNotificationModal(comm)}
+            >
               Log Communication
             </Button>
           </ListItem>
@@ -84,17 +90,21 @@ const Notifications = () => {
         {dueTodayCommunications.map((comm) => (
           <ListItem key={comm.id} style={{ borderBottom: '1px solid #ccc' }}>
             <ListItemText primary={`${comm.company?.name || 'Unknown'} - ${comm.date}`} />
-            <Button variant="contained" color="primary" onClick={() => handleOpenModal(comm)}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => handleOpenNotificationModal(comm)}
+            >
               Log Communication
             </Button>
           </ListItem>
         ))}
       </List>
 
-      <CommunicationModal
-        open={isModalOpen}
-        onClose={handleCloseModal}
-        onSubmit={handleCommunicationSubmit}
+      <NotificationModal
+        open={isNotificationModalOpen}
+        onClose={handleCloseNotificationModal}
+        onSubmit={handleNotificationSubmit}
         initialData={selectedNotification || {}}
       />
     </div>

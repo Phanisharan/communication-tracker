@@ -108,7 +108,7 @@ const CompanyManagement = () => {
       </Button>
       <List>
         {companies.map((company) => (
-          <Card key={company.id} style={{ marginBottom: '16px', padding: '10px' }}>
+          <Card key={company.id} style={{ marginBottom: '16px', padding: '10px',boxShadow: '10px -10px 10px rgba(253, 111, 146, 0.23)', backgroundColor: 'rgba(243, 10, 92, 0.35)', borderRadius: '10px'}}>
             <CardContent>
               <Typography variant="h6">{company.name}</Typography>
               <Typography variant="body2" color="textSecondary">
